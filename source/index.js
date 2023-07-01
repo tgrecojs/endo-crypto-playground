@@ -1,9 +1,14 @@
-import crypto from "node:crypto";
-import { Fn } from "./ADTs.js";
+import { createCipheriv, randomBytes, createDecipheriv } from "node:crypto";
 
-// HMAC - Hash-based Message Authenticaton Code
+const Fn = (g) => ({
+  map: (f) => Fn((x) => f(g(x))),
+  chain: (f) => Fn((x) => f(g(x)).run(x)),
+  concat: (other) => Fn((x) => g(x).concat(other.run(x))),
+  run: g,
+});
 
-const { createCipheriv, randomBytes, createDecipheriv } = crypto;
+Fn.ask = Fn((x) => x);
+Fn.of = (x) => Fn(() => x);
 
 const runEncryption = (
   algorithm = "aes256",
@@ -17,15 +22,6 @@ const runEncryption = (
   inputDecoding,
   decode: createDecipheriv(algorithm, key, initializationVector),
 });
-
-const EncryptedObject = runEncryption(
-  "aes256",
-  randomBytes(32),
-  randomBytes(16)
-); //?
-
-const handleMessage = () => Fn.of(EncryptedObject); //?
-handleMessage("thomas"); //?
 
 const handleEncode =
   (message) =>
@@ -43,9 +39,12 @@ const handleDecode = ({ decode, message, inputDecoding, inputEncoding }) =>
 
 const encryptionFns = {
   createEncryptionObject: runEncryption,
-  EncryptedObject,
-  encodeMessage: (message) => runEncode(message).run(EncryptedObject),
+  EncryptedObject: runEncryption("aes256", randomBytes(32), randomBytes(16)),
+  encodeMessage: (message) =>
+    runEncode(message).run(
+      runEncryption("aes256", randomBytes(32), randomBytes(16))
+    ),
   decodeMessage: Fn(handleDecode),
 };
 
-export { encryptionFns };
+export default encryptionFns;

@@ -28,6 +28,7 @@ const handleEncode =
   ({ encode, inputEncoding, inputDecoding }) =>
     encode.update(message, inputEncoding, inputDecoding) +
     encode.final(inputDecoding);
+
 const handleAddEncodedMessage = (message) => Fn((env) => ({ ...env, message }));
 
 const runEncode = (message) =>

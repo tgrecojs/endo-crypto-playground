@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "ava -v"
+    "test": "ava -v",
+    "lint": "eslint"
   },
   "keywords": [],
   "author": "",
@@ -17,8 +18,20 @@
     "ses": "^0.18.4"
   },
   "devDependencies": {
+    "@endo/eslint-plugin": "^0.4.4",
     "@endo/ses-ava": "^0.2.40",
-    "ava": "^5.3.1"
+    "@jessie.js/eslint-plugin": "^0.4.0",
+    "ava": "^5.3.1",
+    "eslint": "^8.44.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:@endo/recommended"
+    ],
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": "latest"
+    }
   },
   "ava": {
     "files": [

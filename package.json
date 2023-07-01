@@ -1,0 +1,28 @@
+{
+  "name": "secure-crypto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "ava -v"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@endo/compartment-mapper": "^0.8.4",
+    "@endo/import-bundle": "^0.3.4",
+    "@endo/init": "^0.5.56",
+    "ses": "^0.18.4"
+  },
+  "devDependencies": {
+    "@endo/ses-ava": "^0.2.40",
+    "ava": "^5.3.1"
+  },
+  "ava": {
+    "files": [
+      "./test/**/*.test.js"
+    ]
+  }
+}
